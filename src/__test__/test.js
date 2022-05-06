@@ -1,12 +1,12 @@
-import { tasksArray } from "../index.js";
+import { tasksArray } from '../index.js';
 
 document.body.innerHTML = `
 <div class="one-task" id=${0}>
     <div class="data">
       <input id=${0} class="checkBoxClass" type="checkbox" ${
-  tasksArray[0].status ? "checked" : ""
+  tasksArray[0].status ? 'checked' : ''
 }>
-      <p id=${0} class="${tasksArray[0].status ? "checked" : ""} description">${
+      <p id=${0} class="${tasksArray[0].status ? 'checked' : ''} description">${
   tasksArray[0].task
 }</p>
     </div>

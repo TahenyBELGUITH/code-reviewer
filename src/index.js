@@ -1,10 +1,10 @@
-import "./style.css";
+import './style.css';
 import change from "./change.js"; //eslint-disable-line
-export const taskSection = document.querySelector(".tasks");
-const userTask = document.querySelector(".user-task");
-const clearAllCompleted = document.querySelector(".deleteAll");
+export const taskSection = document.querySelector('.tasks');
+const userTask = document.querySelector('.user-task');
+const clearAllCompleted = document.querySelector('.deleteAll');
 export let tasksArray = JSON.parse(localStorage.getItem("task")) || []; //eslint-disable-line
-let MOOD = "CREATE";
+let MOOD = 'CREATE';
 let tmp;
 export default class Task {
   constructor(userTask) {
@@ -15,17 +15,17 @@ export default class Task {
 }
 
 const displayTask = (tasksArray) => {
-  taskSection.innerHTML = "";
+  taskSection.innerHTML = '';
   for (let i = 0; i < tasksArray.length; i += 1) {
     taskSection.innerHTML += `
   <div class="one-task" id=${i}>
     <div class="data">
       <input id=${i} class="checkBoxClass" type="checkbox" ${
-      tasksArray[i].status ? "checked" : ""
-    }>
-      <p id=${i} class="${tasksArray[i].status ? "checked" : ""} description">${
-      tasksArray[i].task
-    }</p>
+  tasksArray[i].status ? 'checked' : ''
+}>
+      <p id=${i} class="${tasksArray[i].status ? 'checked' : ''} description">${
+  tasksArray[i].task
+}</p>
     </div>
     <span class="span">&cross;</span>
   </div>
@@ -34,24 +34,24 @@ const displayTask = (tasksArray) => {
 };
 
 const addTask = () => {
-  if (MOOD === "CREATE") {
+  if (MOOD === 'CREATE') {
     const task = new Task(userTask);
     tasksArray.push(task);
-    localStorage.setItem("task", JSON.stringify(tasksArray));
+    localStorage.setItem('task', JSON.stringify(tasksArray));
     displayTask(tasksArray);
-    userTask.value = "";
+    userTask.value = '';
   } else {
     tasksArray[tmp].task = userTask.value;
-    localStorage.setItem("task", JSON.stringify(tasksArray));
+    localStorage.setItem('task', JSON.stringify(tasksArray));
     displayTask(tasksArray);
-    userTask.value = "";
-    MOOD = "CREATE";
+    userTask.value = '';
+    MOOD = 'CREATE';
     userTask.blur();
   }
 };
 
-userTask.addEventListener("keyup", (e) => {
-  if (e.keyCode === 13 && userTask.value !== "") {
+userTask.addEventListener('keyup', (e) => {
+  if (e.keyCode === 13 && userTask.value !== '') {
     e.preventDefault();
     addTask();
   }
@@ -73,26 +73,26 @@ const updateIndex = () => {
   });
 };
 
-taskSection.addEventListener("click", (e) => {
-  if (e.target.classList.contains("span")) {
+taskSection.addEventListener('click', (e) => {
+  if (e.target.classList.contains('span')) {
     tasksArray.splice(e.target.parentElement.id, 1);
     displayTask(tasksArray);
     updateIndex();
-    localStorage.setItem("task", JSON.stringify(tasksArray));
+    localStorage.setItem('task', JSON.stringify(tasksArray));
   }
 
-  if (e.target.classList.contains("description")) {
+  if (e.target.classList.contains('description')) {
     userTask.focus();
     userTask.value = e.target.innerHTML;
-    MOOD = "UPDATE";
+    MOOD = 'UPDATE';
     tmp = e.target.id;
   }
 });
 
 change();
-clearAllCompleted.addEventListener("click", () => {
+clearAllCompleted.addEventListener('click', () => {
   tasksArray = tasksArray.filter((task) => task.status === false);
   displayTask(tasksArray);
   updateIndex();
-  localStorage.setItem("task", JSON.stringify(tasksArray));
+  localStorage.setItem('task', JSON.stringify(tasksArray));
 });
